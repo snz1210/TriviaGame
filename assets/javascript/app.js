@@ -49,103 +49,16 @@ $(document).ready(function(){
 
 
   	// FUNCTION TO START GAME GOES HERE:
-	function startGame(){
 
-		$('#startBtn').on('click', function(){
-			$('#startBtn').hide();
-			$('#timer').show();
-			$('#questionContainer').show();
-			$('#submit').show();
 
-			timer();
-		});
-
-		myForm.on("submit", onSubmit);
-
-		$('#scores').hide();
-	}
-
-	// FUNCTION FOR TIMER GOES HERE:
-	function timer() {
-		$(".timer").html("Time: " + count + "seconds");
-
-		if (count === 0) {
-			onSubmit();
-		} else {
-			count--;
-			counter = setTimeout(timer, 1000);
-			// the above code makes the timer continously subtract each second
-		}
-	} 
-
+  	// FUNCTION FOR TIME GOES HERE
 
 
 	// FUNCTION TO SHOW QUESTIONS ON PAGE GOES HERE:
-	function displayQuestions(){
 
-		for (var i=0; i < questions.length; i++) {
-
-			var question_el = $('<p>').html(questions[i].question);
-			// named var differently because var question already exists
-			var choices_el = $('<div>');
-
-				questions[i].choices.forEach(function(choice) {
-					// another way to for loop is forEach (look it up!!)
-					choices_el.append(
-						// this adds it to the end of choices_el
-						$('<label class="choice">')
-						.append($('<input type="radio" name="q_' + i + '" value="' + choice + '"/>'))
-						.append(choice)
-						// this appending the choices to the end of each button
-					)
-				});
-
-				$('#questionContainer').append(
-					$('<div class="question">')
-					.append(question_el)
-					.append(choices_el)
-				);
-				// for (var j=0; j < questions[i].choices[j].length; j++) {
-				// 	console.log(questions[i].choices[j]);
-				// PREPEND adds anything before the element
-				}
-		}
-	}
 
 	// FUNCTION TO SUBMIT QUESTIONS GOES HERE:
-	function onSubmit(){
-		clearTimeout(counter);
-		// the above code makes the timer stop counting
-		for (var i = 0; i < questions.length; i ++) {
-
-		 	console.log("questions", questions[i].correctAnswer);
-		 	console.log("value", myForm[0]['q_' + i].value);
-
-		 	if (myForm[0]['q_' + i].value === ""){
-		 		unanswered++;
-		 		$('#unansweredScore').html(unanswered);
-		 	}
-			else if (questions[i].correctAnswer == myForm[0]['q_' + i].value) {
-				correctCount++;
-				$('#correctScore').html(correctCount);
-			}
-			else {
-				incorrectCount++;
-				$('#incorrectScore').html(incorrectCount);
-			}
-
-		}
-
-		$('#submit').hide();
-		$('#questionContainer').hide();
-		$('#scores').show();
-		return false;
-
-	}
 
 
-
-displayQuestions();
-startGame();
-
-});
+// I am working on the javascript and will upload it soon. Having a really hard time with this one
+	
