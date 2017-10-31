@@ -1,15 +1,16 @@
 $(document).ready(function(){
 
-	$(".timer").hide();	
-
-	var count = 30;
-	var counter;
-	var correctAnswers = 0;
-	var incorrectAnswers = 0;
-	var unAnswered = 0;
-	$(".questionsContainer").hide();
-	var myForm = $(".questionForm");
-	var questions = [{
+$("#timer").hide();	
+// hiding the timer on the first page so it doesn't show yet
+var count = 30;
+var counter;
+var correctAnswers = 0;
+var incorrectAnswers = 0;
+var unAnswered = 0;
+$("#questionForm").hide();
+// hiding the questions so they don't show yet
+var myForm = $("#questionForm");
+var questions = [{
     question: "Which island does Moana call home?",
     choices: ["Maui", "Aitutaki", "Taveuni"],
     correctAnswer: "Motunui"
@@ -50,15 +51,101 @@ $(document).ready(function(){
 
   	// FUNCTION TO START GAME GOES HERE:
 
+  	function startGame(){
+
+		$("#startBtn").on("click", function(){
+			$("#startBtn").hide();
+			$("#timer").show();
+			$("#questionContainer").show();
+			$("#submit").show();
+
+			timer();
+		});
+
+		myForm.on("submit", onSubmit());
+
+		$("#scores").hide();
+		console.log(startGame);
+	}
 
   	// FUNCTION FOR TIME GOES HERE
 
+  	function timer(){
+		$("#timer").html("Time: " + count + " seconds");
+
+		if (count <= 0) {
+			onSubmit();
+		} else {
+			count--;
+			counter = setTimeout(timer, 1000);
+		}
+	}
 
 	// FUNCTION TO SHOW QUESTIONS ON PAGE GOES HERE:
+	function displayQuestions(){
 
+		for (var i=0; i < questions.length; i++) {
+
+			var questionArr = $("<p>").html(questions[i].question);
+			// named var differently because var question already exists
+			var choicesArr = $("<div>");
+
+				questions[i].choices.forEach(function(choice) {
+					// another way to for loop is forEach (look it up!!)
+					choices_el.append(
+						// this adds it to the end of choicesArr
+						$("<label class="choice">")
+						.append($('<input type="radio" name="q' + i + '" value="' + choice + '"/>'))
+						.append(choice)
+						// this is appending the choices to the end of each button
+					)
+				});
+
+				$("#questionContainer").append(
+					$('<div class="question">')
+					.append(questionArr)
+					.append(choicesArr)
+				);
+				}
+		}
+	}
 
 	// FUNCTION TO SUBMIT QUESTIONS GOES HERE:
+		function onSubmit(){
+		clearTimeout(counter);
+		// the above code makes the timer stop counting
+		for (var i = 0; i < questions.length; i ++) {
+
+		 	console.log("questions", questions[i].correctAnswer);
+		 	console.log("value", myForm[0]['q' + i].value);
+
+		 	if (myForm[0]["q" + i].value === ""){
+		 		unanswered++;
+		 		$("#unansweredScore").html(unanswered);
+		 	}
+			else if (questions[i].correctAnswer == myForm[0]["q" + i].value) {
+				correctCount++;
+				$("#correctScore").html(correctCount);
+			}
+			else {
+				incorrectCount++;
+				$("#incorrectScore").html(incorrectCount);
+			}
+
+		}
+
+		$("#submit").hide();
+		$("#questionContainer").hide();
+		$("#scores").show();
+		return false;
+
+	}
 
 
-// I am working on the javascript and will upload it soon. Having a really hard time with this one
+
+displayQuestions();
+startGame();
+
+});
+
 	

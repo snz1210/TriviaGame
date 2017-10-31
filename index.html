@@ -5,32 +5,38 @@
 
   <meta charset="UTF-8">
   <title>Trivia Game</title>
+
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-  <script type ="text/javascript" src="assets/javascript/app.js"></script>
+
+  <script type="text/javascript" src="assets/javascript/app.js"></script>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
   <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+
+  <link href="https://fonts.googleapis.com/css?family=Bangers|Oswald" rel="stylesheet">
 
 </head>
 
 <body>
 
   <div class="container">
-    <section class="main-section">
     <!-- FIRST PAGE -->
       <h1>How well do you remember Moana?</h1>
 
-      <button id="startBtn" style="color: white; font-family: 'Bangers', cursive; padding-top: 40px;">
+      <img src="assets/images/moana.jpg" alt="Moana" style="width:500px;height:500px;align-content:middle">
+
+      <button data-toggle="tooltip" data-placement="top" title="Click!" id="startBtn" style="color: white; font-family: 'Bangers', cursive; padding-top: 40px;">
       Start
     </button>
+
   <!-- SECOND PAGE -->
-      <div id="timer">Timer:</div>
-    
+      <div>Timer: <span id="timer"></span></div>
+      
       <form id="questionForm">
-        <div id="questionContainer">Questions:</div>
-    <button id="submit">Submit Answers</button>
-    </form>
+      <div>Questions: <span id="questionContainer"></span></div>
+      <button id="submit">Submit Answers</button>
+      </form>
   <!-- THIRD PAGE -->
     <div id="scores">
     Correct: <span id="correctScore">0</span>
@@ -39,8 +45,6 @@
     <br>
     Unanswered: <span id="unansweredScore">0</span>
       </div>
-
-    </section>
   </div>
   
 </body>
