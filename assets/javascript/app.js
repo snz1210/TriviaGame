@@ -58,7 +58,7 @@ var questions = [{
 			$("#timer").show();
 			$("#questionContainer").show();
 			$("#submit").show();
-
+			console.log($('#startBtn').val())
 			timer();
 		});
 
@@ -71,7 +71,7 @@ var questions = [{
   	// FUNCTION FOR TIME GOES HERE
 
   	function timer(){
-		$("#timer").html("Time: " + count + " seconds");
+		$("#timer").text("Time: " + count + " seconds");
 
 		if (count <= 0) {
 			onSubmit();
@@ -86,7 +86,7 @@ var questions = [{
 
 		for (var i=0; i < questions.length; i++) {
 
-			var questionArr = $("<p>").html(questions[i].question);
+			var questionArr = $("<p>").text(questions[i].question);
 			// named var differently because var question already exists
 			var choicesArr = $("<div>");
 
@@ -102,13 +102,13 @@ var questions = [{
 				});
 
 				$("#questionContainer").append(
-					$('<div class="question">')
+					$("<div class="question">")
 					.append(questionArr)
 					.append(choicesArr)
 				);
-				}
 		}
 	}
+	
 
 	// FUNCTION TO SUBMIT QUESTIONS GOES HERE:
 		function onSubmit(){
@@ -121,15 +121,15 @@ var questions = [{
 
 		 	if (myForm[0]["q" + i].value === ""){
 		 		unanswered++;
-		 		$("#unansweredScore").html(unanswered);
+		 		$("#unansweredScore").text(unanswered);
 		 	}
-			else if (questions[i].correctAnswer == myForm[0]["q" + i].value) {
+			else if (questions[i].correctAnswer === myForm[0]["q" + i].value) {
 				correctCount++;
-				$("#correctScore").html(correctCount);
+				$("#correctScore").text(correctCount);
 			}
 			else {
 				incorrectCount++;
-				$("#incorrectScore").html(incorrectCount);
+				$("#incorrectScore").text(incorrectCount);
 			}
 
 		}
@@ -137,11 +137,11 @@ var questions = [{
 		$("#submit").hide();
 		$("#questionContainer").hide();
 		$("#scores").show();
-		return false;
 
 	}
 
-
+// tried .html first on all the code which didn't work. Then tried .text which also didn't work
+// not sure where I broke the code because none of the javascript is actually applying. Tried to play around with the external js link but couldn't figure it out
 
 displayQuestions();
 startGame();

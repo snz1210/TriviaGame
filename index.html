@@ -7,14 +7,10 @@
   <title>Trivia Game</title>
 
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-
-  <script type="text/javascript" src="assets/javascript/app.js"></script>
-
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
-
   <link href="https://fonts.googleapis.com/css?family=Bangers|Oswald" rel="stylesheet">
+  <script type="text/javascript" src="assets/javascript/app.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 </head>
 
@@ -24,15 +20,15 @@
     <!-- FIRST PAGE -->
       <h1>How well do you remember Moana?</h1>
 
-      <img src="assets/images/moana.jpg" alt="Moana" style="width:500px;height:500px;align-content:middle">
+      <img src="assets/images/moana.jpg" alt="Moana" style="width:500px;height:500px;padding:200px;vertical-align:center">
 
-      <button data-toggle="tooltip" data-placement="top" title="Click!" id="startBtn" style="color: white; font-family: 'Bangers', cursive; padding-top: 40px;">
+      <button id="startBtn" style="color: white; font-family: 'Bangers', cursive; padding: 40px;">
       Start
     </button>
 
   <!-- SECOND PAGE -->
       <div>Timer: <span id="timer"></span></div>
-      
+
       <form id="questionForm">
       <div>Questions: <span id="questionContainer"></span></div>
       <button id="submit">Submit Answers</button>
