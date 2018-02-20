@@ -9,39 +9,25 @@
   <link rel="stylesheet" type="text/css" href="assets/css/style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css?family=Bangers|Oswald" rel="stylesheet">
-  <script type="text/javascript" src="assets/javascript/app.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 </head>
 
 <body>
 
-  <div class="container">
-    <!-- FIRST PAGE -->
+ <div id="wrapper">
+   <div class="container">
       <h1>How well do you remember Moana?</h1>
-
-      <img src="assets/images/moana.jpg" alt="Moana" style="width:500px;height:500px;padding:200px;vertical-align:center">
-
-      <button id="startBtn" style="color: white; font-family: 'Bangers', cursive; padding: 40px;">
-      Start
-    </button>
-
-  <!-- SECOND PAGE -->
-      <div>Timer: <span id="timer"></span></div>
-
-      <form id="questionForm">
-      <div>Questions: <span id="questionContainer"></span></div>
-      <button id="submit">Submit Answers</button>
-      </form>
-  <!-- THIRD PAGE -->
-    <div id="scores">
-    Correct: <span id="correctScore">0</span>
-    <br>
-    Incorrect: <span id="incorrectScore">0</span>
-    <br>
-    Unanswered: <span id="unansweredScore">0</span>
+      <img src="assets/images/moana.jpg" alt="Moana" style="width:500px;height:500px;padding:200px" class="moana_pic">
+      <div id="sub-wrapper">
+        <div id="quiz-area">
+          <button id="start">Start</button>
+        </div>
       </div>
-  </div>
+    </div>
+ </div>
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script type="text/javascript" src="assets/javascript/app.js"></script>
   
 </body>
 </html>

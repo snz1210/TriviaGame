@@ -1,151 +1,177 @@
-$(document).ready(function(){
+var panel = $("#quiz-area");
 
-$("#timer").hide();	
-// hiding the timer on the first page so it doesn't show yet
-var count = 30;
-var counter;
-var correctAnswers = 0;
-var incorrectAnswers = 0;
-var unAnswered = 0;
-$("#questionForm").hide();
-// hiding the questions so they don't show yet
-var myForm = $("#questionForm");
 var questions = [{
     question: "Which island does Moana call home?",
-    choices: ["Maui", "Aitutaki", "Taveuni"],
+    answers: ["Maui", "Aitutaki", "Taveuni"],
     correctAnswer: "Motunui"
   }, {
     question: "What is the name of her pet Pig?",
-    choices: ["Paao", "Hei Hei", "Pahoehoe"],
+		answers: ["Paao", "Hei Hei", "Pahoehoe"],
     correctAnswer: "Pua"
   }, {
     question: "When Moana visits an ancient cave, what does she discover about her ancestors?",
-    choices: ["They were farmers.", "They were scientists.", "They were cannibals."],
+		answers: ["They were farmers.", "They were scientists.", "They were cannibals."],
     correctAnswer: "They were voyagers."
   }, {
     question: "What kind of aquatic animal does Moana's grandmother come back as after she dies?",
-    choices: ["Whale", "Crab", "Octupus"],
+		answers: ["Whale", "Crab", "Octupus"],
     correctAnswer: "Manta Ray"
   }, {
     question: "Before Maui can save the world, who does he have to get his hook back from?",
-    choices: ["Tui", "Te Ka", "Kakamora"],
+		answers: ["Tui", "Te Ka", "Kakamora"],
     correctAnswer: "Tamatoa"
   }, {
     question: "Where does Tamatoa live?",
-    choices: ["Realm of Darkness", "Real of the Dead", "The Center of the Earth"],
+		answers: ["Realm of Darkness", "Real of the Dead", "The Center of the Earth"],
     correctAnswer: "Realm of Monsters"
   }, {
     question: "What is the name of the lava monster they face before getting to Te Fiti?",
-    choices: ["Pahoehoe", "Te AA", "Motonui"],
+		answers: ["Pahoehoe", "Te AA", "Motonui"],
     correctAnswer: "Te Ka"
   }, {
     question: "How did Maui start the spread of darkness in the world?",
-    choices: ["By stealing the hook from the Gods", "By opening door to the underworld", "By starting a war between Gods"],
+		answers: ["By stealing the hook from the Gods", "By opening door to the underworld", "By starting a war between Gods"],
     correctAnswer: "By stealing Fiti's Heart"
   }, {
     question: "Why is Moana's father so against traveling beyond the reef?",
-    choices: ["He doesn't want the people to get lost", "He's seen the monsters in the underworld", "His mother warned him of the dangers"],
+		answers: ["He doesn't want the people to get lost", "He's seen the monsters in the underworld", "His mother warned him of the dangers"],
     correctAnswer: "He tried when he was younger and his bestfriend died because of it"
   }];
 
 
-  	// FUNCTION TO START GAME GOES HERE:
+var timer;
 
-  	function startGame(){
+var game = {
 
-		$("#startBtn").on("click", function(){
-			$("#startBtn").hide();
-			$("#timer").show();
-			$("#questionContainer").show();
-			$("#submit").show();
-			console.log($('#startBtn').val())
-			timer();
-		});
+	correct: 0,
+	incorrect: 0,
+	counter: 120,
 
-		myForm.on("submit", onSubmit());
-
-		$("#scores").hide();
-		console.log(startGame);
-	}
-
-  	// FUNCTION FOR TIME GOES HERE
-
-  	function timer(){
-		$("#timer").text("Time: " + count + " seconds");
-
-		if (count <= 0) {
-			onSubmit();
-		} else {
-			count--;
-			counter = setTimeout(timer, 1000);
+	countdown: function () {
+		game.counter--;
+		$("#counter-number").html(game.counter);
+		if (game.counter === 0) {
+			console.log("TIME UP");
+			game.done();
 		}
-	}
+	},
 
-	// FUNCTION TO SHOW QUESTIONS ON PAGE GOES HERE:
-	function displayQuestions(){
+	start: function () {
+		timer = setInterval(game.countdown, 1000);
 
-		for (var i=0; i < questions.length; i++) {
+		$("#sub-wrapper").prepend("<h2>Time Remaining: <span id='counter-number'>120</span> Seconds</h2>");
 
-			var questionArr = $("<p>").text(questions[i].question);
-			// named var differently because var question already exists
-			var choicesArr = $("<div>");
+		$("#start").remove();
 
-				questions[i].choices.forEach(function(choice) {
-					// another way to for loop is forEach (look it up!!)
-					choices_el.append(
-						// this adds it to the end of choicesArr
-						$("<label class="choice">")
-						.append($('<input type="radio" name="q' + i + '" value="' + choice + '"/>'))
-						.append(choice)
-						// this is appending the choices to the end of each button
-					)
-				});
-
-				$("#questionContainer").append(
-					$("<div class="question">")
-					.append(questionArr)
-					.append(choicesArr)
-				);
+		for (var i = 0; i < questions.length; i++) {
+			panel.append("<h2>" + questions[i].question + "</h2>");
+			for (var j = 0; j < questions[i].answers.length; j++) {
+				panel.append("<input type='radio' name='question-" + i +
+					"' value='" + questions[i].answers[j] + "''>" + questions[i].answers[j]);
+			}
 		}
-	}
-	
 
-	// FUNCTION TO SUBMIT QUESTIONS GOES HERE:
-		function onSubmit(){
-		clearTimeout(counter);
-		// the above code makes the timer stop counting
-		for (var i = 0; i < questions.length; i ++) {
+		panel.append("<button id='done'>Done</button>");
+	},
 
-		 	console.log("questions", questions[i].correctAnswer);
-		 	console.log("value", myForm[0]['q' + i].value);
+	done: function () {
 
-		 	if (myForm[0]["q" + i].value === ""){
-		 		unanswered++;
-		 		$("#unansweredScore").text(unanswered);
-		 	}
-			else if (questions[i].correctAnswer === myForm[0]["q" + i].value) {
-				correctCount++;
-				$("#correctScore").text(correctCount);
+		$.each($("input[name='question-0']:checked"), function () {
+			if ($(this).val() === questions[0].correctAnswer) {
+				game.correct++;
 			}
 			else {
-				incorrectCount++;
-				$("#incorrectScore").text(incorrectCount);
+				game.incorrect++;
 			}
+		});
 
-		}
+		$.each($("input[name='question-1']:checked"), function () {
+			if ($(this).val() === questions[1].correctAnswer) {
+				game.correct++;
+			}
+			else {
+				game.incorrect++;
+			}
+		});
 
-		$("#submit").hide();
-		$("#questionContainer").hide();
-		$("#scores").show();
+		$.each($("input[name='question-2']:checked"), function () {
+			if ($(this).val() === questions[2].correctAnswer) {
+				game.correct++;
+			}
+			else {
+				game.incorrect++;
+			}
+		});
 
+		$.each($("input[name='question-3']:checked"), function () {
+			if ($(this).val() === questions[3].correctAnswer) {
+				game.correct++;
+			}
+			else {
+				game.incorrect++;
+			}
+		});
+
+		$.each($("input[name='question-4']:checked"), function () {
+			if ($(this).val() === questions[4].correctAnswer) {
+				game.correct++;
+			}
+			else {
+				game.incorrect++;
+			}
+		});
+
+		$.each($("input[name='question-5']:checked"), function () {
+			if ($(this).val() === questions[5].correctAnswer) {
+				game.correct++;
+			}
+			else {
+				game.incorrect++;
+			}
+		});
+
+		$.each($("input[name='question-6']:checked"), function () {
+			if ($(this).val() === questions[6].correctAnswer) {
+				game.correct++;
+			}
+			else {
+				game.incorrect++;
+			}
+		});
+
+		$.each($("input[name='question-7']:checked"), function () {
+			if ($(this).val() === questions[7].correctAnswer) {
+				game.correct++;
+			}
+			else {
+				game.incorrect++;
+			}
+		});
+
+		this.result();
+
+	},
+
+	result: function () {
+
+		clearInterval(timer);
+
+		$("#sub-wrapper h2").remove();
+
+		panel.html("<h2>All Done!</h2>");
+		panel.append("<h3>Correct Answers: " + this.correct + "</h3>");
+		panel.append("<h3>Incorrect Answers: " + this.incorrect + "</h3>");
+		panel.append("<h3>Unanswered: " + (questions.length - (this.incorrect + this.correct)) + "</h3>");
 	}
+};
 
-// tried .html first on all the code which didn't work. Then tried .text which also didn't work
-// not sure where I broke the code because none of the javascript is actually applying. Tried to play around with the external js link but couldn't figure it out
+// CLICK EVENTS
 
-displayQuestions();
-startGame();
-
+$(document).on("click", "#start", function () {
+	game.start();
 });
 
-	
+
+$(document).on("click", "#done", function () {
+	game.done();
+});
